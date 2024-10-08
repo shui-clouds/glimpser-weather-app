@@ -5,13 +5,11 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { CheckIcon, ArrowPathIcon } from "@heroicons/react/20/solid";
+import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { LocationApiResponse, LocationResult } from "../types";
 import { fetchWeatherApi } from "openmeteo";
-
-let searchDebounceTimeout: ReturnType<typeof setTimeout>;
 
 const locationApi = "https://geocoding-api.open-meteo.com/v1";
 
@@ -69,6 +67,7 @@ const people = [
 ];
 
 export default function App() {
+  const searchDebounceTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const [location, setLocation] = useState<{
     latitude: number;
     longitude: number;
@@ -76,6 +75,7 @@ export default function App() {
   const [locationSearchResults, setlocationSearchResults] = useState<
     LocationResult[] | undefined
   >([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -125,16 +125,14 @@ export default function App() {
   //   fetchData();
   // }, []);
 
-  // const filteredPeople =
-  //   searchString === ""
-  //     ? people
-  //     : people.filter((person) => {
-  //         return person.name.toLowerCase().includes(searchString.toLowerCase());
-  //       });
+  const formatLocationResultName = (result: LocationResult) => {
+    return Array.from([result.name, result.admin1, result.country])
+      .filter((s) => s)
+      .join(", ");
+  };
 
   return (
     <main className="flex flex-col justify-center items-center px-12 py-12">
-      {/* <p>current: {searchString}</p> */}
       <h1 className="text-center text-3xl font-semibold">Weather App</h1>
       <Combobox
         className="w-full max-w-64"
@@ -144,38 +142,42 @@ export default function App() {
       >
         <div className="relative mt-12">
           <ComboboxInput
-            className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-7 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => {
-              clearTimeout(searchDebounceTimeout);
+              clearTimeout(searchDebounceTimeoutRef.current);
               const searchString = event.target.value;
-              if (searchString === "") {
+              if (searchString.length < 2) {
                 setlocationSearchResults([]);
+                setErrorMessage("Enter 2 or more characters");
                 return;
               }
               setlocationSearchResults(undefined);
-              searchDebounceTimeout = setTimeout(async () => {
+              searchDebounceTimeoutRef.current = setTimeout(async () => {
                 const data: LocationApiResponse = await queryClient.fetchQuery({
                   queryKey: ["search", searchString],
                   queryFn: async () => {
                     const response = await fetch(
                       `${locationApi}/search?name=${searchString}`
                     );
-                    const jsonResponse = await response.json();
-                    console.log(jsonResponse);
-                    return jsonResponse;
+                    return await response.json();
                   },
                 });
                 if (data.results) {
                   setlocationSearchResults(data.results);
+                  setErrorMessage(null);
                 } else {
                   setlocationSearchResults([]);
+                  setErrorMessage("No results found");
                 }
               }, 500);
             }}
             placeholder="Enter a location..."
+            displayValue={(result: LocationResult | undefined) =>
+              result ? formatLocationResultName(result) : ""
+            }
           />
-          <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-            <ChevronUpDownIcon
+          <ComboboxButton className="pointer-events-none absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+            <ArrowPathIcon
               className={`h-5 w-5 text-gray-400 animate-spin ${
                 locationSearchResults === undefined ? "" : "hidden"
               }`}
@@ -188,11 +190,11 @@ export default function App() {
               {locationSearchResults.map((result) => (
                 <ComboboxOption
                   key={result.id}
-                  value={`${result.name}, ${result.admin1}, ${result.country}`}
+                  value={result}
                   className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white"
                 >
                   <span className="block truncate group-data-[selected]:font-semibold">
-                    {`${result.name}, ${result.admin1}, ${result.country}`}
+                    {formatLocationResultName(result)}
                   </span>
 
                   <span className="absolute inset-y-0 right-0 hidden items-center pr-4 text-indigo-600 group-data-[selected]:flex group-data-[focus]:text-white">
@@ -201,6 +203,11 @@ export default function App() {
                 </ComboboxOption>
               ))}
             </ComboboxOptions>
+          )}
+          {errorMessage && (
+            <p className="mt-1 text-sm font-medium text-center">
+              {errorMessage}
+            </p>
           )}
         </div>
       </Combobox>
