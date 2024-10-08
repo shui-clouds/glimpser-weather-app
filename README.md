@@ -4,7 +4,7 @@
 
 
 ## 👩‍💻 Getting the app running
-Have an up to date version of Node.js 14+ installed, ideally with npm run installed as well
+Node version used: v20.15.0
 
 - Clone the repository
 
