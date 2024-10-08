@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <main className="flex flex-col justify-center items-center px-12 py-12">
-      <h1 className="text-center text-3xl font-semibold">Weather App</h1>
+      <h1 className="text-center text-3xl font-semibold">Glimpser ⛅</h1>
       <Combobox
         className="w-full max-w-64"
         as="div"
