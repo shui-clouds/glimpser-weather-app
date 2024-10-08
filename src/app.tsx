@@ -1,9 +1,64 @@
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import { useState } from 'react'
 
+
 const people = [
-  { id: 1, name: 'Leslie Alexander' },
+  {
+    id: 1,
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    telephone: '+1-202-555-0170',
+    imageUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+
+  },
+  {
+    id: 2,
+    name: 'Jane Test',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    telephone: '+1-202-555-0170',
+    imageUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+
+  },
+  {
+    id: 3,
+    name: 'Jane Test',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    telephone: '+1-202-555-0170',
+    imageUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+
+  },
+  {
+    id: 4,
+    name: 'Jane Test',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    telephone: '+1-202-555-0170',
+    imageUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+
+  },
+  {
+    id: 5,
+    name: 'Jane Test',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    telephone: '+1-202-555-0170',
+    imageUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+
+  },
 ]
 
 export default function App() {
@@ -29,7 +84,7 @@ export default function App() {
           setSelectedPerson(person)
         }}
       >
-        <div className="relative mt-8">
+        <div className="relative mt-12">
           <ComboboxInput
             className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             onChange={(event) => setQuery(event.target.value)}
@@ -61,16 +116,22 @@ export default function App() {
         </div>
       </Combobox>
 
-      <div className='md:flex gap-x-6 mt-2'>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
+      <div className='md:flex gap-x-6 mt-12'>
+        {people.map((person) => (
+          <div
+            key={person.email}
+            className="flex flex-col rounded-sm  text-center outline outline-2 outline-gray-200 my-8"
+          >
+            <div className="flex flex-1 flex-col p-8 px-12 gap-y-2">
+              <p className="text-xl font-medium text-gray-900 pb-4">Day / Date</p>
+              <img alt="" src={person.imageUrl} className="mx-auto aspect-square max-w-36 mb-2" />
+              <p className="text-lg text-gray-900">Description</p>
+              <p className="text-lg text-gray-900">Temperature</p>
+              <p className="text-lg text-gray-900">Wind Speed</p>
 
+            </div>
+          </div>
+        ))}
 
       </div>
 
