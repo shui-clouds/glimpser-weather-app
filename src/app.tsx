@@ -134,7 +134,7 @@ export default function App() {
                 src={weatherForecast.weatherCodeImage}
                 className="mx-auto aspect-square max-w-36 mb-2"
               />
-              <p className="text-md text-gray-900">
+              <p className="text-md font-medium text-gray-900">
                 {weatherForecast.weatherCodeCaption}
               </p>
               <p className="text-md text-gray-900">
