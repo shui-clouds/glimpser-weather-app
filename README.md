@@ -20,4 +20,4 @@ Have an up to date version of Node.js 14+ installed, ideally with npm run instal
 ![alt text](./public/app_preview.png)
 
 #### Mobile
-![alt text](image.png)
+![alt text](./public/image.png)
