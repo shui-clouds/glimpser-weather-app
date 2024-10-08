@@ -1,9 +1,9 @@
-type LocationApiResponse = {
+export type LocationApiResponse = {
   results?: LocationResult[];
   generationtime_ms: number;
 };
 
-type LocationResult = {
+export type LocationResult = {
   id: number;
   name: string;
   latitude: number;
@@ -21,5 +21,3 @@ type LocationResult = {
   admin2: string;
   postcodes?: string[]; // Optional, since not all results include this field
 };
-
-export { LocationApiResponse, LocationResult };

@@ -9,62 +9,7 @@ import { CheckIcon, ArrowPathIcon } from "@heroicons/react/20/solid";
 import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { LocationApiResponse, LocationResult } from "../types";
-import { fetchWeatherApi } from "openmeteo";
-
-const locationApi = "https://geocoding-api.open-meteo.com/v1";
-
-const people = [
-  {
-    id: 1,
-    name: "Jane Cooper",
-    title: "Paradigm Representative",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  {
-    id: 2,
-    name: "Jane Test",
-    title: "Paradigm Representative",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  {
-    id: 3,
-    name: "Jane Test",
-    title: "Paradigm Representative",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  {
-    id: 4,
-    name: "Jane Test",
-    title: "Paradigm Representative",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  {
-    id: 5,
-    name: "Jane Test",
-    title: "Paradigm Representative",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-];
+import { fetchWeatherData, locationApi } from "../lib";
 
 export default function App() {
   const searchDebounceTimeoutRef = useRef<ReturnType<typeof setTimeout>>();

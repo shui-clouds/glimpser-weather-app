@@ -90,14 +90,3 @@ export const fetchWeatherData = async (longitude: number, latitude: number) => {
     console.dir(formattedWeatherData, {depth: null})
     return formattedWeatherData;
   };
-
-  export type WeatherData = {
-    time: Date;
-    weatherCodeCaption: string;
-    weatherCodeImage: string;
-    temperature2mMax: number;
-    temperature2mMin: number;
-    apparentTemperatureMax: number;
-    apparentTemperatureMin: number; 
-    windSpeed10mMax: number;
-  }
