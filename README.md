@@ -17,7 +17,7 @@ Node version used: v20.15.0
 - Open your browser and go to http://localhost:5173
 
 ### 👀 Preview
-![alt text](./public/app_preview.png)
+![alt text](./public/desktop-preview.png)
 
 #### Mobile
-![alt text](./public/image.png)
+![alt text](./public/mobile-preview.png)

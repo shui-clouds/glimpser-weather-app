@@ -126,8 +126,13 @@ export default function App() {
             className="flex flex-col rounded-sm  text-center outline outline-2 outline-gray-200 my-8"
           >
             <div className="flex flex-1 flex-col p-8 px-12 gap-y-2 ">
-              <p className="text-xl font-medium text-gray-900 pb-4">
-                {weatherForecast.time.toLocaleDateString()}
+              <p className="text-lg font-medium text-gray-900 pb-4">
+                {weatherForecast.time.toLocaleDateString(undefined, {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "2-digit",
+                  year: "numeric",
+                })}
               </p>
               <img
                 alt=""
